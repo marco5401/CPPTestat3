@@ -2,15 +2,16 @@
 #include "ide_listener.h"
 #include "xml_listener.h"
 #include "cute_runner.h"
+#include <set>
 
-void thisIsATest() {
-	ASSERTM("start writing tests", false);	
+void testEmptyConstructor() {
+	std::set<int> mySet{};
+	ASSERT_EQUAL(0, mySet.size());
 }
 
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
-	//TODO add your test here
-	s.push_back(CUTE(thisIsATest));
+	s.push_back(CUTE(testEmptyConstructor));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };
