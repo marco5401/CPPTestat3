@@ -1,5 +1,7 @@
 <testsuites>
-	<testsuite name="AllTests" tests="1">
-		<testcase classname="AllTests" name="testEmptyConstructor"/>
+	<testsuite name="AllTests" tests="3">
+		<testcase classname="AllTests" name="test_empty_constructor"/>
+		<testcase classname="AllTests" name="test_range_constructor"/>
+		<testcase classname="AllTests" name="test_copy_constructor"/>
 	</testsuite>
 </testsuites>
