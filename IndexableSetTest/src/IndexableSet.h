@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <set>
+#include <iterator>
 
 namespace IndexableSet
 {
@@ -11,6 +12,18 @@ struct indexableSet : std::set<T, COMPARE>
 {
 	using std::set<T>::set;
 	using size_type=typename std::set<T>::size_type;
+
+	T operator[](int index)
+	{
+		if(index < 0)
+		{
+			return std::next(this->end(), index);
+		}else
+		{
+			return std::next(this->begin(), index);
+		}
+
+	}
 
 };
 
