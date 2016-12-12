@@ -8,7 +8,7 @@ void test_empty_constructor() {
 	/*
 	 * Constructs an empty container, with no elements.
 	 */
-	IndexableSet::indexableSet<int> set{};
+	indexable_set::indexable_set<int> set{};
 	ASSERT_EQUAL(0, set.size());
 }
 
@@ -19,7 +19,7 @@ void test_range_constructor() {
 	 */
 
 	int my_range[] = {1,2,3,4,5};
-	IndexableSet::indexableSet<int> set{my_range, my_range+5};
+	indexable_set::indexable_set<int> set{my_range, my_range+5};
 
 	ASSERT_EQUAL(5, set.size());
 }
@@ -29,9 +29,9 @@ void test_copy_constructor() {
 	 * Constructs a container with a copy of each of the elements in x.
 	 */
 	int my_range[] = {1,2,3,4,5};
-	IndexableSet::indexableSet<int> first_set{my_range, my_range+5};
+	indexable_set::indexable_set<int> first_set{my_range, my_range+5};
 
-	IndexableSet::indexableSet<int> second_set{first_set};
+	indexable_set::indexable_set<int> second_set{first_set};
 	ASSERT_EQUAL(5, second_set.size());
 }
 

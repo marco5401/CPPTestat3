@@ -5,13 +5,13 @@
 #include <set>
 #include <iterator>
 
-namespace IndexableSet
+namespace indexable_set
 {
 template <typename T, typename COMPARE=std::less<T>>
-struct indexableSet : std::set<T, COMPARE>
+struct indexable_set : std::set<T, COMPARE>
 {
 	using std::set<T>::set;
-	using size_type=typename std::set<T>::size_type;
+	using size_type = typename std::set<T>::size_type;
 
 	T operator[](int index)
 	{
