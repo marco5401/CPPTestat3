@@ -89,6 +89,30 @@ void test_index_access_reverse() {
 	ASSERT_EQUAL(5, my_set[-1]);
 }
 
+void test_front() {
+	indexable_set::indexable_set<int> my_set{default_range, default_range + default_range_size};
+
+	ASSERT_EQUAL(1, my_set.front());
+}
+
+void test_back() {
+	indexable_set::indexable_set<int> my_set{default_range, default_range + default_range_size};
+
+	ASSERT_EQUAL(5, my_set.back());
+}
+
+void test_out_of_bounds() {
+	indexable_set::indexable_set<int> my_set{default_range, default_range + default_range_size};
+
+	ASSERT_THROWS(my_set[5], std::out_of_range);
+}
+
+void test_out_of_bounds_min() {
+	indexable_set::indexable_set<int> my_set{default_range, default_range + default_range_size};
+
+	ASSERT_THROWS(my_set[-6], std::out_of_range);
+}
+
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
 	s.push_back(CUTE(test_empty_constructor));
@@ -98,6 +122,10 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(test_index_access));
 	s.push_back(CUTE(test_index_access_reverse));
 	s.push_back(CUTE(test_index_access_sorted_order));
+	s.push_back(CUTE(test_front));
+	s.push_back(CUTE(test_back));
+	s.push_back(CUTE(test_out_of_bounds));
+	s.push_back(CUTE(test_out_of_bounds_min));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };
