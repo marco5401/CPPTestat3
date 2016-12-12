@@ -16,6 +16,10 @@ struct indexable_set : std::set<T, COMPARE>
 
 	T operator[](int const index) {
 
+		if(this->empty()) {
+			throw std::out_of_range{"The indexable_set is empty"};
+		}
+
 		unsigned int absolute_index = abs(index);
 
 		if(index < 0) {

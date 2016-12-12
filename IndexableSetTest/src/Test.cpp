@@ -113,6 +113,12 @@ void test_out_of_bounds_min() {
 	ASSERT_THROWS(my_set[-6], std::out_of_range);
 }
 
+void test_empty() {
+	indexable_set::indexable_set<int> my_set{};
+
+	ASSERT_THROWS(my_set.front(), std::out_of_range);
+}
+
 bool runAllTests(int argc, char const *argv[]) {
 	cute::suite s { };
 	s.push_back(CUTE(test_empty_constructor));
@@ -126,6 +132,7 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(test_back));
 	s.push_back(CUTE(test_out_of_bounds));
 	s.push_back(CUTE(test_out_of_bounds_min));
+	s.push_back(CUTE(test_empty));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };
