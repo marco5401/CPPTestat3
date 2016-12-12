@@ -59,7 +59,10 @@ void test_move_constructor() {
 	 * x is left in an unspecified but valid state.
 	 * Source: www.cplusplus.com/reference/set/set
 	 */
-	ASSERT(false);
+	indexable_set::indexable_set<int> first_set{default_range, default_range + default_range_size};
+	indexable_set::indexable_set<int> new_set = std::move(first_set);
+
+	ASSERT_EQUAL(5, new_set.size());
 }
 
 void test_initializer_list_constructor() {
@@ -125,6 +128,7 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(test_range_constructor));
 	s.push_back(CUTE(test_copy_constructor));
 	s.push_back(CUTE(test_copy_constructor_copies));
+	s.push_back(CUTE(test_move_constructor));
 	s.push_back(CUTE(test_index_access));
 	s.push_back(CUTE(test_index_access_reverse));
 	s.push_back(CUTE(test_index_access_sorted_order));
