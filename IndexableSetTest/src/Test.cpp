@@ -71,15 +71,22 @@ void test_initializer_list_constructor() {
 }
 
 void test_index_access() {
-	indexable_set::indexable_set<int> first_set{default_range, default_range + default_range_size};
+	indexable_set::indexable_set<int> my_set{default_range, default_range + default_range_size};
 
-	ASSERT_EQUAL(2, first_set[1]);
+	ASSERT_EQUAL(2, my_set[1]);
+}
+
+void test_index_access_sorted_order() {
+	const int my_array[]{3, 4, 1, 2, 5};
+	indexable_set::indexable_set<int> my_set{my_array, my_array + 5};
+
+	ASSERT_EQUAL(2, my_set[1]);
 }
 
 void test_index_access_reverse() {
-	indexable_set::indexable_set<int> first_set{default_range, default_range + default_range_size};
+	indexable_set::indexable_set<int> my_set{default_range, default_range + default_range_size};
 
-	ASSERT_EQUAL(5, first_set[-1]);
+	ASSERT_EQUAL(5, my_set[-1]);
 }
 
 bool runAllTests(int argc, char const *argv[]) {
@@ -90,6 +97,7 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(test_copy_constructor_copies));
 	s.push_back(CUTE(test_index_access));
 	s.push_back(CUTE(test_index_access_reverse));
+	s.push_back(CUTE(test_index_access_sorted_order));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };

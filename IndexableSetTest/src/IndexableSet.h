@@ -13,18 +13,13 @@ struct indexable_set : std::set<T, COMPARE>
 	using std::set<T>::set;
 	using size_type = typename std::set<T>::size_type;
 
-	T operator[](int const index)
-	{
-		if(index < 0)
-		{
+	T operator[](int const index) {
+		if(index < 0) {
 			return *(std::next(this->end(), index));
-		} else
-		{
+		} else {
 			return *(std::next(this->begin(), index));
 		}
-
 	}
-
 };
 
 
