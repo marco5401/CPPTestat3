@@ -4,6 +4,9 @@
 #include "cute_runner.h"
 #include "IndexableSet.h"
 
+const int default_range[] = {1, 2, 3, 4, 5};
+const int default_range_size = sizeof(default_range) / sizeof(int);
+
 void test_empty_constructor() {
 	/*
 	 * Constructs an empty container, with no elements.
@@ -20,8 +23,7 @@ void test_range_constructor() {
 	 * Source: www.cplusplus.com/reference/set/set
 	 */
 
-	int my_range[] = {1,2,3,4,5};
-	indexable_set::indexable_set<int> set{my_range, my_range+5};
+	indexable_set::indexable_set<int> set{default_range, default_range + default_range_size};
 
 	ASSERT_EQUAL(5, set.size());
 }
@@ -31,12 +33,23 @@ void test_copy_constructor() {
 	 * Constructs a container with a copy of each of the elements in x.
 	 * Source: www.cplusplus.com/reference/set/set
 	 */
-	int my_range[] = {1,2,3,4,5};
-	indexable_set::indexable_set<int> first_set{my_range, my_range+5};
+	indexable_set::indexable_set<int> first_set{default_range, default_range + default_range_size};
 
 	indexable_set::indexable_set<int> second_set{first_set};
 	ASSERT_EQUAL(5, second_set.size());
 }
+
+
+void test_copy_constructor_copies() {
+
+	indexable_set::indexable_set<int> first_set{default_range, default_range + default_range_size};
+	indexable_set::indexable_set<int> second_set{first_set};
+
+	ASSERT_EQUAL(1, second_set[0]);
+	ASSERT_EQUAL(5, second_set.size());
+}
+
+// endregion
 
 void test_move_constructor() {
 	/*
@@ -46,7 +59,7 @@ void test_move_constructor() {
 	 * x is left in an unspecified but valid state.
 	 * Source: www.cplusplus.com/reference/set/set
 	 */
-	ASSERT(true);
+	ASSERT(false);
 }
 
 void test_initializer_list_constructor() {
@@ -54,7 +67,19 @@ void test_initializer_list_constructor() {
 	 * Constructs a container with a copy of each of the elements in il.
 	 * Source: www.cplusplus.com/reference/set/set
 	 */
-	ASSERT(true);
+	ASSERT(false);
+}
+
+void test_index_access() {
+	indexable_set::indexable_set<int> first_set{default_range, default_range + default_range_size};
+
+	ASSERT_EQUAL(2, first_set[1]);
+}
+
+void test_index_access_reverse() {
+	indexable_set::indexable_set<int> first_set{default_range, default_range + default_range_size};
+
+	ASSERT_EQUAL(5, first_set[-1]);
 }
 
 bool runAllTests(int argc, char const *argv[]) {
@@ -62,8 +87,9 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(test_empty_constructor));
 	s.push_back(CUTE(test_range_constructor));
 	s.push_back(CUTE(test_copy_constructor));
-	s.push_back(CUTE(test_move_constructor));
-	s.push_back(CUTE(test_initializer_list_constructor));
+	s.push_back(CUTE(test_copy_constructor_copies));
+	s.push_back(CUTE(test_index_access));
+	s.push_back(CUTE(test_index_access_reverse));
 	cute::xml_file_opener xmlfile(argc, argv);
 	cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
 	auto runner { cute::makeRunner(lis, argc, argv) };
