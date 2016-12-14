@@ -14,29 +14,15 @@ struct indexable_set : std::set<T, COMPARE>
 	using size_type = typename std::set<T>::size_type;
 	using constref = T const &;
 
-	constref operator[](int const index) const {
-
-		if(this->empty()) {
-			throw std::out_of_range{"The indexable_set is empty"};
-		}
-
-		unsigned int absolute_index = abs(index);
+	constref operator[](int index) const {
 
 		if(index < 0) {
-			if(absolute_index > this->size()) {
-				throw std::out_of_range{"Index out of bounds!"};
-			}
-		} else {
-			if(absolute_index >= this->size()) {
-				throw std::out_of_range{"Index out of bounds!"};
-			}
+			index = this->size() + index;
 		}
-
-		if(index < 0) {
-			return *(std::next(this->end(), index));
-		} else {
+		if(index <0 || static_cast<size_type>(index) >= this->size()) {
+			throw std::out_of_range{"Index out of bounds!"};
+		}
 			return *(std::next(this->begin(), index));
-		}
 	}
 
 	constref front() const {
