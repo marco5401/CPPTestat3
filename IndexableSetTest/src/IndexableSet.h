@@ -10,11 +10,11 @@ namespace indexable_set
 template <typename T, typename COMPARE=std::less<T>>
 struct indexable_set : std::set<T, COMPARE>
 {
-	using Base=std::set<T>;
-	using std::set<T>::set;
+	using std::set<T, COMPARE>::set;
 	using size_type = typename std::set<T>::size_type;
+	using constref = T const &;
 
-	T operator[](int const index) {
+	constref operator[](int const index) const {
 
 		if(this->empty()) {
 			throw std::out_of_range{"The indexable_set is empty"};
@@ -39,13 +39,12 @@ struct indexable_set : std::set<T, COMPARE>
 		}
 	}
 
-	T front() {
-		// WTF? "this->operator" ?!?!?
-		return this->operator [](0);
+	constref front() const {
+		return (*this)[0];
 	}
 
-	T back() {
-		return this->operator [](-1);
+	constref back() const {
+		return (*this)[-1];
 	}
 };
 
